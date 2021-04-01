@@ -1,0 +1,71 @@
+package Sumofdigits;
+
+import java.util.ArrayList;
+
+public class sumofdigits {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	    ArrayList<Integer> n = myPow(2, 100);
+
+	    int res = 0;
+	    for (Integer i : n) {
+	        res += i;
+	    }
+
+	    System.out.println(res);
+	}
+
+	public static ArrayList<Integer> myPow(int n, int p) {
+	    ArrayList<Integer> a = new ArrayList<Integer>();
+	    for (char b : Integer.toString(n).toCharArray()) {
+	        a.add(b - 48);
+	    }
+
+	    for (int i = 1; i < p; i++) {
+	        a = mySum(a, a);
+	    }
+
+	    return a;
+	}
+
+	public static ArrayList<Integer> mySum(ArrayList<Integer> b, ArrayList<Integer> c) {
+	    ArrayList<Integer> res = new ArrayList<Integer>();
+
+	    int take = 0;
+
+	    int max = Math.max(b.size(), c.size());
+	    if (b.size() != max)
+	        b = normalizeList(b, max);
+	    if (c.size() != max)
+	        c = normalizeList(c, max);
+
+	    for (int i = max - 1; i >= 0; i--) {
+	        int n = b.get(i) + c.get(i) + take;
+	        take = 0;
+	        if (n > 9) {
+	            String s = Integer.toString(n);
+	            take = s.charAt(0) - 48;
+	            res.add(0, s.charAt(s.length() - 1) - 48);
+	        } else
+	            res.add(0, n);
+	    }
+
+	    if (take != 0)
+	        res.add(0, take);
+
+	    return res;
+	}
+
+	public static ArrayList<Integer> normalizeList(ArrayList<Integer> d, int max) {
+	    int newSize = max - d.size();
+	    for (int i = 0; i < newSize; i++) {
+	        d.add(0, 0);
+	    }
+	    return d;
+	}
+
+	}
+
+
